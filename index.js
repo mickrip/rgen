@@ -26,6 +26,10 @@ const choices = [
   {
     name: "Standard Component (with styled component)",
     value: "component"
+  },
+  {
+    name: "Standard Pure Component (no dir)",
+    value: "componentsimplenodir"
   }
 ];
 
@@ -43,6 +47,7 @@ const choices = [
   switch (foo.choice) {
     case "component":
     case "componentsimple":
+    case "componentsimplenodir":
       const answer = await askName("Name of component");
       ret = await runPlop(foo.choice, { name: answer.name });
       break;
