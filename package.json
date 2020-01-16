@@ -1,10 +1,10 @@
 {
-  "name": "chilligen",
-  "version": "0.0.1",
+  "name": "rgen",
+  "version": "0.0.2",
   "main": "index.js",
   "license": "MIT",
   "bin": {
-    "chilligen": "index.js"
+    "rgen": "index.js"
   },
   "dependencies": {
     "inquirer": "^7.0.0",

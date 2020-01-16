@@ -1,40 +1,43 @@
 #!/usr/bin/env node
+const path = require("path");
 const nodePlop = require("node-plop");
 const inquirer = require("inquirer");
+const fs = require("fs");
 
-const runPlop = async (filename, data) => {
-  const plop = nodePlop(`${__dirname}/plops/${filename}.js`);
-  const basicAdd = plop.getGenerator("default");
-  return await basicAdd.runActions(data);
+const GENDIR = "generators";
+
+const goPlop = async thing => {
+  const componentLocation = path.join(__dirname, GENDIR, thing);
+  global._terribleIdea = require(componentLocation);
+  const p = await nodePlop(path.join(__dirname, "helpers", "makePlop.js"));
+  const basicAdd = p.getGenerator("default");
+  const promptData = await basicAdd.runPrompts();
+  await basicAdd.runActions(promptData);
 };
-
-const askName = async q => {
-  return await inquirer.prompt([
-    {
-      type: "input",
-      name: "name",
-      message: q
-    }
-  ]);
-};
-
-const choices = [
-  {
-    name: "Standard Component",
-    value: "componentsimple"
-  },
-  {
-    name: "Standard Component (with styled component)",
-    value: "component"
-  },
-  {
-    name: "Standard Pure Component (no dir)",
-    value: "componentsimplenodir"
-  }
-];
 
 (async function main() {
-  const foo = await inquirer.prompt([
+  const directoryList = fs.readdirSync(path.join(__dirname, GENDIR), {
+    withFileTypes: true
+  });
+
+  const choices = directoryList
+    .map(file => {
+      if (file.isFile()) {
+        const componentLocation = path.join(__dirname, GENDIR, file.name);
+        const foo = require(componentLocation);
+        if (foo.description) {
+          return {
+            value: file.name,
+            name: foo.description
+          };
+        } else {
+          return null;
+        }
+      } else return null;
+    })
+    .filter(v => v !== null);
+
+  const promptData = await inquirer.prompt([
     {
       type: "list",
       name: "choice",
@@ -43,19 +46,5 @@ const choices = [
     }
   ]);
 
-  let ret;
-  switch (foo.choice) {
-    case "component":
-    case "componentsimple":
-    case "componentsimplenodir":
-      const answer = await askName("Name of component");
-      ret = await runPlop(foo.choice, { name: answer.name });
-      break;
-
-    default:
-      console.error(`${foo.choice} not found.`);
-      break;
-  }
-
-  console.log(ret);
+  await goPlop(promptData.choice);
 })();
