@@ -36,7 +36,7 @@ module.exports = {
 ```
 
 - The template specifies the handlebars template in the `templates` dir.
-- The target is the target relative to the current directory.
-- some useful helpers are documented [here](https://github.com/plopjs/plop#built-in-helpers). You could make your own
+- The target is relative to the current directory.
+- some useful helpers are documented [here](https://github.com/plopjs/plop#built-in-helpers).
 
 Feel free to fork and/or pilfer it.
