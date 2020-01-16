@@ -5,7 +5,7 @@ module.exports = {
   prompts: [askComponentName],
   files: [
     {
-      target: "{{pwd name}}/{{pascalCase name}}.jsx",
+      target: "{{name}}/{{pascalCase name}}.jsx",
       template: "component/component.hbs"
     }
   ]

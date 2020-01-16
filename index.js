@@ -9,7 +9,10 @@ const GENDIR = "generators";
 const goPlop = async thing => {
   const componentLocation = path.join(__dirname, GENDIR, thing);
   global._terribleIdea = require(componentLocation);
-  const p = await nodePlop(path.join(__dirname, "helpers", "makePlop.js"));
+  const p = await nodePlop(path.join(__dirname, "helpers", "makePlop.js"), {
+    destBasePath: process.cwd()
+  });
+
   const basicAdd = p.getGenerator("default");
   const promptData = await basicAdd.runPrompts();
   await basicAdd.runActions(promptData);
