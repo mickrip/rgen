@@ -3,8 +3,9 @@ const path = require("path");
 let data = {};
 
 const makeActions = data => {
-  return data.map(v => {
+  const actions = data.map(v => {
     return {
+      abortOnFail: true,
       type: "add",
       path: v.target,
       templateFile: path.join(
@@ -16,6 +17,16 @@ const makeActions = data => {
       )
     };
   });
+
+  return data => {
+    const mutatedActions = actions.map(a => {
+      if (data.includeDir === true) {
+        a["path"] = "{{name}}/" + a["path"];
+      }
+      return a;
+    });
+    return mutatedActions;
+  };
 };
 
 module.exports = plop => {

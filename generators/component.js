@@ -1,16 +1,29 @@
 const askComponentName = require("../helpers/askComponentName");
+const askToCreateDir = require("../helpers/askToCreateDir");
 
 module.exports = {
   description: "Standard Component (with styled component)",
-  prompts: [askComponentName],
+  prompts: [
+    askComponentName,
+    askToCreateDir,
+    {
+      type: "list",
+      name: "sctemplate",
+      choices: [
+        { name: "standard", value: "componentstyles" },
+        { name: "tailwind", value: "componentstylestailwind" }
+      ],
+      message: "Type of styled-component"
+    }
+  ],
   files: [
     {
-      target: "{{name}}/{{pascalCase name}}.jsx",
+      target: "{{pascalCase name}}.jsx",
       template: "component/component.hbs"
     },
     {
-      target: "{{name}}/{{pascalCase name}}Styles.jsx",
-      template: "component/componentstyles.hbs"
+      target: "{{pascalCase name}}Styles.jsx",
+      template: "component/{{sctemplate}}.hbs"
     }
   ]
 };

@@ -1,12 +1,12 @@
 const askComponentName = require("../helpers/askComponentName");
 
 module.exports = {
-  description: "Standard Component (Don't create a Dir)",
+  description: "State Machine Hook",
   prompts: [askComponentName],
   files: [
     {
-      target: "{{pascalCase name}}.jsx",
-      template: "componentsimple/component.hbs"
+      template: "statemachine.hbs",
+      target: "{{name}}.js"
     }
   ]
 };

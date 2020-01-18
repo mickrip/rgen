@@ -1,11 +1,12 @@
 const askComponentName = require("../helpers/askComponentName");
+const askToCreateDir = require("../helpers/askToCreateDir");
 
 module.exports = {
-  description: "Standard Component",
-  prompts: [askComponentName],
+  description: "Standard Component (no Styling)",
+  prompts: [askComponentName, askToCreateDir],
   files: [
     {
-      target: "{{name}}/{{pascalCase name}}.jsx",
+      target: "{{pascalCase name}}.jsx",
       template: "component/component.hbs"
     }
   ]

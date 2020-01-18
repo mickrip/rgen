@@ -27,11 +27,12 @@ const goPlop = async thing => {
     .map(file => {
       if (file.isFile()) {
         const componentLocation = path.join(__dirname, GENDIR, file.name);
-        const foo = require(componentLocation);
-        if (foo.description) {
+        const componentObject = require(componentLocation);
+        if (componentObject.skip === true) return null;
+        if (componentObject.description) {
           return {
             value: file.name,
-            name: foo.description
+            name: componentObject.description
           };
         } else {
           return null;
