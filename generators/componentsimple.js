@@ -7,7 +7,7 @@ module.exports = {
   files: [
     {
       target: "{{pascalCase name}}.jsx",
-      template: "component/component.hbs"
+      template: "componentsimple/component.hbs"
     }
   ]
 };
